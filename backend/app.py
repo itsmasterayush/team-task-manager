@@ -340,8 +340,9 @@ def get_dashboard(current_user):
         'done': done,
         'overdue': overdue
     }), 200
-
 if __name__ == '__main__':
+    import os
+
     # Add a default admin if none exists
     with app.app_context():
         if not User.query.filter_by(email='admin@test.com').first():
@@ -350,5 +351,7 @@ if __name__ == '__main__':
             db.session.add(admin)
             db.session.commit()
             print("Default admin created: admin@test.com / admin123")
-    
-    app.run(host='0.0.0.0', port=5000, debug=True)
+
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+
